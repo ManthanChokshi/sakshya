@@ -1,0 +1,118 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Light theme (fallback, matches :root/html always) */
+:root {
+  --background: 255 255 255;
+  --foreground: 15 23 42;
+  --color-white: 15 23 42;
+  --color-slate-50: 2 6 23;
+  --color-slate-100: 15 23 42;
+  --color-slate-200: 30 41 59;
+  --color-slate-300: 51 65 85;
+  --color-slate-400: 71 85 105;
+  --color-slate-500: 100 116 139;
+  --color-slate-600: 148 163 184;
+  --color-slate-700: 203 213 225;
+  --color-slate-800: 226 232 240;
+  --color-slate-900: 241 245 249;
+  --color-slate-950: 248 250 252;
+  --color-obsidian-950: 255 255 255;
+  --color-obsidian-900: 250 250 252;
+  --color-obsidian-850: 245 245 248;
+  --color-obsidian-800: 238 238 242;
+  --color-obsidian-750: 228 228 235;
+  --color-obsidian-700: 218 218 227;
+}
+
+/* Dark theme — must come after :root so it wins on <html class="dark"> (same specificity, source order decides) */
+.dark {
+  --background: 0 0 0;
+  --foreground: 255 255 255;
+  --color-white: 255 255 255;
+  --color-slate-50: 249 250 251;
+  --color-slate-100: 243 244 246;
+  --color-slate-200: 229 231 235;
+  --color-slate-300: 209 213 219;
+  --color-slate-400: 156 163 175;
+  --color-slate-500: 107 114 128;
+  --color-slate-600: 75 85 99;
+  --color-slate-700: 55 65 81;
+  --color-slate-800: 31 41 55;
+  --color-slate-900: 17 24 39;
+  --color-slate-950: 3 7 18;
+  --color-obsidian-950: 0 0 0;
+  --color-obsidian-900: 10 10 15;
+  --color-obsidian-850: 13 13 18;
+  --color-obsidian-800: 18 18 24;
+  --color-obsidian-750: 24 24 31;
+  --color-obsidian-700: 31 31 40;
+}
+
+body {
+  color: rgb(var(--foreground));
+  background: rgb(var(--background));
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--color-obsidian-900));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-slate-700));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-slate-600));
+}
+
+/* Case-file panels (flat, no glass/blur) */
+.glass-panel {
+  background: rgb(var(--color-obsidian-900));
+  border: 1px solid rgb(var(--color-white) / 0.08);
+}
+
+.glass-panel-accent {
+  background: rgb(var(--color-obsidian-900));
+  border: 1px solid rgb(var(--color-white) / 0.1);
+}
+
+.glow-cyan {
+  box-shadow: none;
+}
+
+.glow-emerald {
+  box-shadow: none;
+}
+
+/* Spinning gradient-border CTA (violet -> pink), signature accent from the mockup */
+@keyframes spin-border {
+  to { transform: rotate(360deg); }
+}
+.spin-border-wrap {
+  position: relative;
+  padding: 2px;
+  border-radius: 999px;
+  overflow: hidden;
+  display: inline-block;
+}
+.spin-border-wrap::before {
+  content: "";
+  position: absolute;
+  left: -30%;
+  top: -400%;
+  width: 160%;
+  height: 900%;
+  background: conic-gradient(from 0deg, transparent 0deg, #9333EA 90deg, #EC4899 180deg, transparent 280deg);
+  animation: spin-border 4s linear infinite;
+}
+.spin-border-wrap > * {
+  position: relative;
+}
