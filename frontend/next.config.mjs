@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
-const isExport = process.env.NODE_ENV === 'production';
+// Firebase Hosting needs a static export; Vercel renders natively (VERCEL=1 on its builders).
+const isExport = process.env.NODE_ENV === 'production' && !process.env.VERCEL;
 
 const nextConfig = {
   reactStrictMode: true,

@@ -1,0 +1,22 @@
+# Backend service for Sakshya. The FastAPI engine streams operation telemetry
+# over WebSockets and holds connection state in memory, so it needs a
+# persistent container rather than serverless functions.
+services:
+  - type: web
+    name: sakshya-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /
+    envVars:
+      # Without DATABASE_URL the app falls back to SQLite on the container's
+      # ephemeral disk, which is wiped on every deploy and restart.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sakshya-db
+          property: connectionString
+
+databases:
+  - name: sakshya-db
+    databaseName: sakshya
+    plan: free
