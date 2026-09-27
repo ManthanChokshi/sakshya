@@ -45,3 +45,6 @@ brag-output-*/
 
 # TypeScript incremental build cache
 *.tsbuildinfo
+
+# Vercel CLI local state and build cache
+.vercel/
