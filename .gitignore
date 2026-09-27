@@ -42,3 +42,6 @@ backend/*.db
 # Rendered launch-video artifacts
 brag-output/
 brag-output-*/
+
+# TypeScript incremental build cache
+*.tsbuildinfo
