@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Trash2, ShieldCheck, Zap, Info, Play, CheckCircle2, AlertCircle, RefreshCw, FileText } from "lucide-react";
-import { getCase, getCaseDevices, createOperation, Operation, Device, Case, API_BASE } from "@/lib/api";
+import { getCase, getCaseDevices, createOperation, Operation, Device, Case, API_BASE, wsOrigin } from "@/lib/api";
 
 export default function SanitizePage() {
   const params = useParams();
@@ -88,9 +88,7 @@ export default function SanitizePage() {
         }, 350);
       };
 
-      const wsProtocol = typeof window !== "undefined" && window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsHost = process.env.NEXT_PUBLIC_WS_BASE || `${wsProtocol}//localhost:8000`;
-      const wsUrl = `${wsHost}/api/operations/${op.id}/stream`;
+      const wsUrl = `${wsOrigin()}/api/operations/${op.id}/stream`;
 
       try {
         const ws = new WebSocket(wsUrl);

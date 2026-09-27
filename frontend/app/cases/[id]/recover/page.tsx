@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { HardDrive, FileText, Filter, Play, CheckCircle2, Eye, Copy, Check, Hash, ShieldCheck } from "lucide-react";
-import { getCase, getCaseDevices, createOperation, getOperationFiles, RecoveredFile, Device, Case } from "@/lib/api";
+import { getCase, getCaseDevices, createOperation, getOperationFiles, RecoveredFile, Device, Case, wsOrigin } from "@/lib/api";
 
 export default function CarvePage() {
   const params = useParams();
@@ -123,9 +123,7 @@ export default function CarvePage() {
         }, 300);
       };
 
-      const wsProtocol = typeof window !== "undefined" && window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsHost = process.env.NEXT_PUBLIC_WS_BASE || `${wsProtocol}//localhost:8000`;
-      const wsUrl = `${wsHost}/api/operations/${op.id}/stream`;
+      const wsUrl = `${wsOrigin()}/api/operations/${op.id}/stream`;
 
       try {
         const ws = new WebSocket(wsUrl);

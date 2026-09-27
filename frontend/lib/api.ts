@@ -1,4 +1,19 @@
-export const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000/api";
+// Deployed, the API is served from the same origin as the frontend (see the
+// service rewrites in vercel.json), so a relative path is correct. Local dev
+// runs the backend on its own port, hence the localhost fallback.
+const sameOrigin =
+  typeof window !== "undefined" && !window.location.hostname.startsWith("localhost");
+
+export const API_BASE =
+  process.env.NEXT_PUBLIC_API_BASE || (sameOrigin ? "/api" : "http://localhost:8000/api");
+
+// Absolute ws:// or wss:// origin for the telemetry stream, without a trailing slash.
+export function wsOrigin(): string {
+  if (process.env.NEXT_PUBLIC_WS_BASE) return process.env.NEXT_PUBLIC_WS_BASE;
+  if (typeof window === "undefined") return "ws://localhost:8000";
+  const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+  return sameOrigin ? `${protocol}//${window.location.host}` : "ws://localhost:8000";
+}
 
 export interface Officer {
   id: string;
